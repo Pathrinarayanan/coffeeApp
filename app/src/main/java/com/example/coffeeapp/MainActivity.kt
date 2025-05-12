@@ -38,6 +38,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,6 +59,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.example.coffeeapp.ui.theme.CoffeeAppTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,9 +69,23 @@ class MainActivity : ComponentActivity() {
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 
         setContent {
-                MainScreen()
+                HomeWidget()
 
         }
+    }
+}
+@Composable
+fun HomeWidget(){
+    var show by remember{ mutableStateOf(true) }
+    LaunchedEffect(Unit) {
+        delay(3000)
+        show = false
+    }
+    if(show){
+        SplashScreen()
+    }
+    if(!show){
+        MainScreen()
     }
 }
 
@@ -314,6 +334,7 @@ fun Product(){
 
 @Composable
 fun SplashScreen() {
+
     Column(
         modifier = Modifier.fillMaxSize()
             .background(Color(0xff1E1E1E))
